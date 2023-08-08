@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import BoardList from "pages/BoardPage/BoardListPage";
@@ -7,7 +8,7 @@ import BoardCreate from "pages/BoardPage/BoardCreatePage";
 import BoardModify from "pages/BoardPage/BoardModifyPage";
 import MyPosts from "pages/MyPage/MyPosts";
 import PersonalInfo from "pages/MyPage/PersonalInfo";
-import VS from "./pages/VSPage/VsPage";
+import VS from "./pages/VS";
 import MainPage from "./pages/MainPage/MainPage";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -22,6 +23,7 @@ import LoginDataPage from "components/Login/LoginDataPage";
 import MyPage from "pages/MyPage/MyPage";
 import ManageCreate from "pages/ManagerPage/ManageCreate";
 import BoardListInfinityScroll from "pages/BoardPage/BoardListInfinityScroll2";
+
 export default function App() {
   return (
     <div>
@@ -35,8 +37,8 @@ export default function App() {
             <Route path="/BoardDetail/:id" element={<BoardDetail />} />
             <Route path="/BoardCreate" element={<BoardCreate />} />
             <Route path="/BootCamp" element={<BootCamp />} />
-            <Route path="/src/pages/VSPage/VsPage" element={<VS />} />
             <Route path="/infinity" element={<BoardListInfinityScroll />} />
+            <Route path="/VS" element={<VS />} />
             <Route
               path="/bootcampdetail/:bootcampid"
               element={<BootCampListDetailPage />}
@@ -49,13 +51,9 @@ export default function App() {
             <Route path="/ManagerPage/*" element={<ManagerPage />}>
               <Route path="" element={<Regist />} />
               <Route path="Management" element={<Management />} />
-              <Route path="Management/:bootcampid" element={<ManageCreate />} />
+              <Route path="Management/create" element={<ManageCreate />} />
               <Route path="Mission" element={<Mission />} />
             </Route>
-            <Route
-              path="/bootcampdetail/:bootcampid"
-              element={<BootCampListDetailPage />}
-            />
           </Routes>
         </main>
       </Provider>

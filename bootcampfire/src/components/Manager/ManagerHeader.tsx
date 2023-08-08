@@ -44,7 +44,7 @@ const StyledLink = styled(Link)`
   padding: 5px 0 9px 0;
 `;
 const StyledBold24px = styled(Bold24px)`
-  margin: 10px 20px 20px 20px;
+  margin: 20px 20px 30px 20px;
 `;
 const StyledBold21px = styled(Bold18px)`
   padding: 5px 50px 9px 50px;

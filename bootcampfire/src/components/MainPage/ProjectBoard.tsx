@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import HotContent from './HotContent';
 import { Bold18px } from 'components/Board/styled';
+import MoreBtn from './MoreBtn';
 const Container = styled.div``;
 
 const Table = styled.table`
@@ -30,8 +31,11 @@ export default function ProjectBoard() {
     <div>
       <Container>
         <img src="/public/logo.png" alt="" height={'auto'} width={'auto'} />
-        <Bold18px>프로젝트</Bold18px>
-        <hr />
+        <div style={{ display: 'flex', gap: '30px', marginBottom: '10px', alignItems: 'center' }}>
+          <Bold18px>프로젝트</Bold18px>
+          <MoreBtn index={5}></MoreBtn>
+        </div>
+        <div style={{ borderBottom: 'solid 1px' }} />
         <Table>
           <tbody>
             {rows.map((row) => (

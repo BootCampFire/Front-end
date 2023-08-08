@@ -36,7 +36,7 @@ export default function HotBoard() {
   return (
     <div>
       <Container>
-        <h2>핫한 게시글</h2>
+        <h2>뜨거운 이야기</h2>
         <img src="/public/logo.png" alt="" height={'auto'} width={'auto'} />
         <Table>
           <tbody>

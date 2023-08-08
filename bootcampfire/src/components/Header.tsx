@@ -94,9 +94,7 @@ export default function Header() {
 
   const handleLogin = () => {
     // 모달 열기 함수
-
     setModalOpen(true);
-    // dispatch(login({ userId: 10, nickname: '사용자123', email: 'user@example.com', isAdmin: true, bootcampId: 1 }));
     // console.log(bootcampId);
   };
 
@@ -106,7 +104,7 @@ export default function Header() {
   const handleLogout = () => {
     dispatch(logout());
     const isMyPage = new RegExp('My');
-    const isManagerPage = new RegExp('Manager');
+    const isManagerPage = new RegExp('Manage');
     const thisLocation = window.location.href;
     if (isMyPage.test(thisLocation) || isManagerPage.test(thisLocation)) navigate('/');
   };

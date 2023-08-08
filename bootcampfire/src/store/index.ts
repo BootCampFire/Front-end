@@ -21,6 +21,7 @@ export interface RootState {
     // sel_lst : boolean[];
     // category : boolean[];
     
+
     trackList : { name: string; isOn: boolean; }[];
     regionList : { name: string; isOn: boolean; }[];
     etcList : { name: string; isOn: boolean; }[];
@@ -28,6 +29,7 @@ export interface RootState {
     tmp_lst : string[];
     item_lst : string[];
     
+
     category : boolean[];
 };
   manageState: {

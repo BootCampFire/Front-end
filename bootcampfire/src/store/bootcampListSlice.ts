@@ -34,6 +34,7 @@ const bootcampListSlice = createSlice({
     }      
 })    
 
+
 export const { 
   fetchBootcampStart, 
   fetchBootcampSuccess, 
@@ -41,6 +42,7 @@ export const {
   selectDropBox, 
   updateBootSearch
 } = bootcampListSlice.actions;
+
 
 export default bootcampListSlice.reducer;
 

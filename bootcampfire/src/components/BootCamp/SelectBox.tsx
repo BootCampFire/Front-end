@@ -6,9 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 // import {onoff_num, onoff_text, category_onoff} from '../../store/selectSlice';
 import { initTrack, initRegion, 
+
           onoff_track, 
           onoff_region, onoff_etc,
           category_onoff } from 'store/selectSlice';
+
 import axios from 'axios';
 
 import { useEffect } from 'react';
@@ -20,8 +22,10 @@ import { useEffect } from 'react';
 const SelectBox: React.FC = () =>  {
 
   // const { sel_lst, item_lst, category, tmp_lst } = useSelector((state: RootState) => state.select);
+
   const { trackList, regionList, etcList, category, tmp_lst, 
           } = useSelector((state: RootState) => state.select);
+
   const dispatch = useDispatch();
 
   const handleCategoryToggle = (value: number) => {dispatch(category_onoff(value));};
@@ -34,6 +38,7 @@ const SelectBox: React.FC = () =>  {
       .then((response) => dispatch(initRegion(response.data.data)))
       .catch((error) => console.log(error.message));
   }, []);
+
 
   const handleSeletedTagClick = (categoryIndex: number, itemIndex: number) => {
     if (categoryIndex === 0) {
@@ -53,6 +58,7 @@ const SelectBox: React.FC = () =>  {
   const filteredEtcList = etcList.filter((item) => item.isOn);
 
 
+
   return (
     <>
       <Container>
@@ -64,6 +70,7 @@ const SelectBox: React.FC = () =>  {
           {category[0] && (
             <ItemBox>
               {trackList.map((item, idx) => (
+
                 <SeletedTag text={item.name}
                   isOn={item.isOn}  
                   onClick={() => handleSeletedTagClick(0, idx)}
@@ -101,6 +108,7 @@ const SelectBox: React.FC = () =>  {
                 <SeletedTag text={item.name}
                   isOn={item.isOn}  
                   onClick={() => handleSeletedTagClick(2, idx)}
+
                 />
               ))}
             </ItemBox>
@@ -125,6 +133,7 @@ const SelectBox: React.FC = () =>  {
         </div>
         <NavItem>선택 항목</NavItem>
         <ItemBox>
+
               {filteredTrackList.map((item, idx) => (
                 <SeletedTag text={item.name}
                   isOn={true}  
@@ -140,6 +149,7 @@ const SelectBox: React.FC = () =>  {
                   isOn={true}  
                 />
               ))}        
+
         </ItemBox>
       </Container>
     </>

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { StyledPage } from './styledPage';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Board } from 'components/Board/interface';
@@ -86,3 +87,4 @@ const BoardListMain = styled.div`
 `
     
 export default BoardListPage;
+

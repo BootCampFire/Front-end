@@ -1,4 +1,5 @@
 import ManageCard from 'components/Manager/ManageCard';
+import styled from 'styled-components';
 
 function createData(img: string, name: string, bootcamp: string) {
   return { img, name, bootcamp };
@@ -25,17 +26,25 @@ export default function Regist() {
     { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '김민범', bootcamp: '우테코' },
   ];
   return (
-    <div style={{ height: '800px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div
-        style={{
-          gap: 70,
-          display: 'flex',
-          flexWrap: 'wrap',
-        }}>
+    <WrapperManageCardContainer className='Wrapper'>
+      <ManageCardContainer className='Container'>
         {userList.map((row) => (
           <ManageCard email={row.email} img={row.img} nickname={row.nickname} bootcamp={row.bootcamp}></ManageCard>
         ))}
-      </div>
-    </div>
+      </ManageCardContainer>
+    </WrapperManageCardContainer>
   );
 }
+const WrapperManageCardContainer = styled.div`
+  width: 100%;
+  position: relative;
+`
+const ManageCardContainer = styled.div`
+  gap: 65px;
+  width: 100%;
+  top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  align-items: center;
+`

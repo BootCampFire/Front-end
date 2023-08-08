@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import HotContent from './HotContent';
+import { Bold18px } from 'components/Board/styled';
+import MoreBtn from './MoreBtn';
 const Container = styled.div``;
 
 const Table = styled.table`
@@ -29,7 +31,11 @@ export default function StudyBoard() {
     <div>
       <Container>
         <img src="/public/logo.png" alt="" height={'auto'} width={'auto'} />
-        <hr />
+        <div style={{ display: 'flex', gap: '30px', marginBottom: '10px', alignItems: 'center' }}>
+          <Bold18px>스터디</Bold18px>
+          <MoreBtn index={4}></MoreBtn>
+        </div>
+        <div style={{ borderBottom: 'solid 1px' }} />
         <Table>
           <tbody>
             {rows.map((row) => (
