@@ -1,15 +1,7 @@
-import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { login } from '../../store/authSlice';
 import { Bold18px, Normal13px } from 'components/Board/styled';
-import axios from 'axios';
-import { Link, Navigate, Params, Route, useNavigate, useParams } from 'react-router-dom';
-import { Home } from '@mui/icons-material';
-import MainPage from 'pages/MainPage/MainPage';
-import LoginDataPage from './LoginDataPage';
 
 const style = {
   position: 'absolute' as 'absolute',

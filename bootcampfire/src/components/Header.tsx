@@ -21,7 +21,7 @@ const HeaderContents = styled.div`
   margin: auto;
   padding: 0 30px;
   // 헤더 미디어 쿼리 작업 해야함
-`
+`;
 
 const LogoLink = styled(Link)`
   img {
@@ -67,10 +67,6 @@ const WritePrimaryBtn = styled.button`
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
-
-  &:hover {
-    background-color: #1e7e34;
-  }
 `;
 
 const HeaderContentContainer = styled.div`
@@ -119,7 +115,7 @@ export default function Header() {
       <HeaderContents className="test">
         <HeaderContentContainer>
           <LogoLink to="/">
-            <img src="/logo.png" alt="Home" style={{width: 67, height: 74}}/>
+            <img src="/logo.png" alt="Home" style={{ width: 67, height: 74 }} />
           </LogoLink>
           <NavLink to="/Board">
             <Bold21px as="span">Board</Bold21px>

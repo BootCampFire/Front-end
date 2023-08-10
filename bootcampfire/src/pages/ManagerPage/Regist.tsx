@@ -1,35 +1,31 @@
+import axios from 'axios';
 import ManageCard from 'components/Manager/ManageCard';
+
+import { useEffect, useState } from 'react';
+
 import styled from 'styled-components';
 
-function createData(img: string, name: string, bootcamp: string) {
-  return { img, name, bootcamp };
+
+interface registBootCamp {
+  img: string;
+  id: number;
+  nickname: string;
 }
 export default function Regist() {
-  // const userList = [
-  //   createData('/logo512', '김민범', 'SSAFY'),
-  //   createData('/logo512', '김봉준', 'SSAFY'),
-  //   createData('/logo512', '박지환', 'SSAFY'),
-  //   createData('/logo512', '안나', 'SSAFY'),
-  //   createData('/logo512', '이연희', 'SSAFY'),
-  //   createData('/logo512', '임수형', 'SSAFY'),
-  //   createData('/logo512', '김민범', 'SOMA'),
-  //   createData('/logo512', '김민범', '우테코'),
-  // ];
-  const userList = [
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '김민범', bootcamp: 'SSAFY' },
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '김봉준', bootcamp: 'SSAFY' },
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '박지환', bootcamp: 'SSAFY' },
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '안나', bootcamp: 'SSAFY' },
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '이연희', bootcamp: 'SSAFY' },
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '임수형', bootcamp: 'SSAFY' },
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '김민범', bootcamp: 'SOMA' },
-    { email: 'beom0109@naver.com', img: '/logo512.png', nickname: '김민범', bootcamp: '우테코' },
-  ];
+  const [rows, setRows] = useState<registBootCamp[]>([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/users/admin/permission/list`).then((res) => {
+      setRows(res.data.data);
+    });
+  }, []);
+
   return (
+
     <WrapperManageCardContainer className='Wrapper'>
       <ManageCardContainer className='Container'>
-        {userList.map((row) => (
-          <ManageCard email={row.email} img={row.img} nickname={row.nickname} bootcamp={row.bootcamp}></ManageCard>
+         {rows.map((row) => (
+          <ManageCard id={row.id} img={row.img} nickname={row.nickname}></ManageCard>
         ))}
       </ManageCardContainer>
     </WrapperManageCardContainer>

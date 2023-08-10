@@ -19,9 +19,6 @@ export interface RootState {
     email: string;
   };
   select : {  
-    // sel_lst : boolean[];
-    // category : boolean[];
-    
 
     trackList : { name: string; isOn: boolean; }[];
     regionList : { name: string; isOn: boolean; }[];
@@ -66,6 +63,7 @@ export interface RootState {
     bootSearch : string,
   };
   vs : {
+    GameRank10 : gameRank[];
     myGameRank : gameRank;
 
   }
@@ -104,9 +102,8 @@ interface BootcampItem {
 }
 
 interface gameRank {
-  nickName : string;
-  bootCamp : string;
+  userNickname : string;
+  bootcampName : string;
   score : number;
-  ranking : number;
+  rank : number;
 }
-

@@ -56,6 +56,11 @@ const DetailTab: React.FC<BootCampCardProps> = ({ bootcamp }) => {
                     <Inner1> 지원금 : </Inner1>
                     <Inner2> {bootcamp.support ? 'O' : 'X'} </Inner2>
                   </HorizontalDivs>
+                  <HorizontalDivs>
+                    <Inner1> 내일배움 카드 : </Inner1>
+                    <Inner2> {bootcamp.card ? 'O' : 'X'} </Inner2>
+                  </HorizontalDivs>
+                  
                 </VerticalDivs>
               </ContentContainer>
             </SubDiv>

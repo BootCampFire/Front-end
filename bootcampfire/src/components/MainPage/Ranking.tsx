@@ -15,10 +15,6 @@ const VSBtn = styled(Link)`
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
-
-  &:hover {
-    background-color: #1e7e34;
-  }
 `;
 
 const rows = [
@@ -64,7 +60,7 @@ export default function Ranking() {
           </tbody>
         </table>
       </Sample2>
-      <VSBtn to="/src/pages/VSPage/VsPage">바로가기</VSBtn>
+      <VSBtn to="/Vs">바로가기</VSBtn>
     </Sample>
   );
 }

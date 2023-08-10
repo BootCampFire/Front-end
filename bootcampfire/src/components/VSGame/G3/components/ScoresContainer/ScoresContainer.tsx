@@ -7,7 +7,7 @@ import ScoreBox from "../ScoreBox";
 import { ACTIONTYPE, ScoresState } from "./Interfaces";
 
 import { RootState } from "store";
-import { loadMyRank } from "store/vsSlice";
+import { loadMyRank, loadGameRank } from "store/vsSlice";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { updateScore } from "store/vsSlice";
@@ -18,22 +18,6 @@ export const ScoresContainer = () => {
 
   const { gameState } = useGameContext();
   
-  
-  const handleSaveScore = () => {
-    const postData = {
-      bestScore : myGameRank.score,
-    };
-    if (myGameRank.score != -1){
-
-      axios
-      .post(`http://localhost:8080/games`, postData)
-      .then((response) => {
-        console.log("점수 갱신 완료");
-      })
-      .catch((error) => {console.error("점수 갱신 중 오류가 발생했습니다.", error);});
-    }
-  }
-
   const [state, dispatch] = useGameLocalStorage(
     "scores",
     initState(),
@@ -47,22 +31,25 @@ export const ScoresContainer = () => {
   const { myGameRank } = useSelector((state: RootState) => state.vs)
   const {isLoggedIn} = useSelector((state: RootState) => state.auth)
   const dispatch2 = useDispatch();
+
   // GAME_OVER
   useEffect(() => {
-    if (gameState.status === "GAME_OVER" || gameState.status === "WIN") {
-      console.log("갱신됨")
-      console.log(myGameRank.score, "vs", state.bestScore)
-      if (myGameRank.score < state.bestScore) {
-        dispatch2(updateScore(state.bestScore))
-        console.log("디스패치 까지는 됨 ㅋㅋ ")
-        if(isLoggedIn) {
-          console.log("여기까지도 들어옴 ㅋㅋ")
-          handleSaveScore()
+      setTimeout(() => {
+        if (myGameRank.score < state.bestScore) {
+          // console.log("0.9 초후 값 : ",myGameRank.score, state.bestScore)
+          dispatch2(updateScore(Math.max(myGameRank.score, state.bestScore)));
+          if (isLoggedIn && state.score > 1000) {
+            axios.post(`http://localhost:8080/games`, {bestScore : state.bestScore})
+            .then((response) => { console.log("성공공! : ", response)})
+          }
+            axios.get(`http://localhost:8080/games`)
+            .then((response)=>dispatch2(loadGameRank(response.data.data)))          
         }
-      }
-      
-    }
-  }, [gameState.status, myGameRank.score, state.bestScore, dispatch2]);
+      }, 500);
+      axios.get(`http://localhost:8080/games`)
+          .then((response)=>dispatch2(loadGameRank(response.data.data))) 
+  }, [gameState.status, state.bestScore]);
+
   
 
   useEffect(() => {

@@ -38,8 +38,8 @@ function MyPosts() {
 
 
   const BoardList = boardList.map((element) => (
-    <BoardCard data={element} onClick={() => navigate(`/BoardDetail:${element.id}`)}/>
-  ))
+    <BoardCard data={element} onClick={() => navigate(`/BoardDetail:${element.id}`)} />
+  ));
 
   return (
     <WrapperBoardListMain>

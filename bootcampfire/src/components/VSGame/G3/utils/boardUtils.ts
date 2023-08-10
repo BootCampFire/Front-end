@@ -1,4 +1,4 @@
-import { Value, Tile, Direction } from "../components/interfaces";
+import { Value, Tile, Direction } from '../components/interfaces';
 
 const INDICES = [0, 1, 2, 3];
 
@@ -9,9 +9,7 @@ export const areEqual = (b1: Tile[], b2: Tile[]) => {
 export const areTilesEqual = (t1: Tile, t2: Tile): boolean => {
   return (
     (t1 === null && t2 === null) ||
-    (t1.positionX === t2.positionX &&
-      t1.positionY === t2.positionY &&
-      t1.value === t2.value)
+    (t1.positionX === t2.positionX && t1.positionY === t2.positionY && t1.value === t2.value)
   );
 };
 
@@ -20,48 +18,31 @@ export const isGameWon = (tiles: Tile[]) => {
 };
 
 export const isGameOver = (tiles: Tile[]) => {
-
   const tilesOnSamePosition = (tiles: Tile[]) => {
     const tilesMap: { [key: string]: boolean } = {};
-    for(let i = 0; i< tiles.length; i++){
+    for (let i = 0; i < tiles.length; i++) {
       const key = `${tiles[i].positionX}${tiles[i].positionY}`;
-      if(tilesMap[key]){
+      if (tilesMap[key]) {
         return true;
       }
       tilesMap[key] = true;
     }
 
     return false;
-  }
+  };
 
   if (tiles.length < 16 || tilesOnSamePosition(tiles)) {
     return false;
   }
 
-  const movePossible = (
-    arr1: Tile[],
-    arr2: Tile[],
-    getCoordinate: (x: Tile) => number
-  ) => {
-    return arr1.some((x) =>
-      arr2.some(
-        (y) => getCoordinate(x) === getCoordinate(y) && x.value === y.value
-      )
-    );
+  const movePossible = (arr1: Tile[], arr2: Tile[], getCoordinate: (x: Tile) => number) => {
+    return arr1.some((x) => arr2.some((y) => getCoordinate(x) === getCoordinate(y) && x.value === y.value));
   };
 
   for (let i = 0; i < 3; i++) {
     if (
-      movePossible(
-        getRow(tiles, i),
-        getRow(tiles, i + 1),
-        (x: Tile) => x.positionY
-      ) ||
-      movePossible(
-        getColumn(tiles, i),
-        getColumn(tiles, i + 1),
-        (x: Tile) => x.positionX
-      )
+      movePossible(getRow(tiles, i), getRow(tiles, i + 1), (x: Tile) => x.positionY) ||
+      movePossible(getColumn(tiles, i), getColumn(tiles, i + 1), (x: Tile) => x.positionX)
     ) {
       return false;
     }
@@ -78,7 +59,7 @@ export const merge = (tiles: Tile[]): Tile[] => {
     const key = `${v.positionX}${v.positionY}`;
     if (values[key]) {
       const value = (v.value * 2) as Value;
-      values[key] = { ...v, id: id++, value, type: "merged" };
+      values[key] = { ...v, id: id++, value, type: 'merged' };
     } else {
       values[key] = v;
     }
@@ -88,25 +69,19 @@ export const merge = (tiles: Tile[]): Tile[] => {
 };
 
 export const moveRight = (tiles: Tile[]): Tile[] => {
-  return INDICES.map((i) =>
-    shiftHorizontally(getRow(tiles, i), "right")
-  ).flat();
+  return INDICES.map((i) => shiftHorizontally(getRow(tiles, i), 'right')).flat();
 };
 
 export const moveLeft = (tiles: Tile[]): Tile[] => {
-  return INDICES.map((i) => shiftHorizontally(getRow(tiles, i), "left")).flat();
+  return INDICES.map((i) => shiftHorizontally(getRow(tiles, i), 'left')).flat();
 };
 
 export const moveUp = (tiles: Tile[]): Tile[] => {
-  return INDICES.map((i) =>
-    shiftVertically(getColumn(tiles, i), "left")
-  ).flat();
+  return INDICES.map((i) => shiftVertically(getColumn(tiles, i), 'left')).flat();
 };
 
 export const moveDown = (tiles: Tile[]): Tile[] => {
-  return INDICES.map((i) =>
-    shiftVertically(getColumn(tiles, i), "right")
-  ).flat();
+  return INDICES.map((i) => shiftVertically(getColumn(tiles, i), 'right')).flat();
 };
 
 const shiftHorizontally = (line: Tile[], direction: Direction): Tile[] => {
@@ -139,17 +114,17 @@ const shift = (
   let result: Tile[] = JSON.parse(JSON.stringify(line));
   result.sort((v1, v2) => getColumn(v1) - getColumn(v2));
 
-  const startPosition = direction === "left" ? 0 : 4 - result.length;
+  const startPosition = direction === 'left' ? 0 : 4 - result.length;
   for (let i = 0; i < result.length; i++) {
     setColumn(result[i], startPosition + i);
   }
 
-  direction === "left" && result.reverse();
+  direction === 'left' && result.reverse();
   let i = result.length - 1;
   while (i >= 1) {
     if (result[i].value === result[i - 1].value && result[i].value !== 16384) {
       for (let j = 0; j <= i - 1; j++) {
-        const shift = direction === "right" ? 1 : -1;
+        const shift = direction === 'right' ? 1 : -1;
         setColumn(result[j], getColumn(result[j]) + shift);
       }
       i -= 2;
@@ -211,27 +186,19 @@ export const createRandomTile = (tiles: Tile[]): Tile => {
   return {
     id: getNextId(tiles),
     value,
-    type: "new",
+    type: 'new',
     positionX: coordinates[0],
     positionY: coordinates[1],
   };
 };
 
-const isExists = (
-  tiles: Tile[],
-  positionX: number,
-  positionY: number
-): boolean => {
-  return tiles.some(
-    (x) => x.positionX === positionX && x.positionY === positionY
-  );
+const isExists = (tiles: Tile[], positionX: number, positionY: number): boolean => {
+  return tiles.some((x) => x.positionX === positionX && x.positionY === positionY);
 };
 
-export const getRow = (tiles: Tile[], row: number): Array<Tile> =>
-  tiles.filter((x) => x.positionX === row);
+export const getRow = (tiles: Tile[], row: number): Array<Tile> => tiles.filter((x) => x.positionX === row);
 
-export const getColumn = (tiles: Tile[], column: number): Array<Tile> =>
-  tiles.filter((x) => x.positionY === column);
+export const getColumn = (tiles: Tile[], column: number): Array<Tile> => tiles.filter((x) => x.positionY === column);
 
 export const getNextId = (tiles: Tile[]): number => {
   return getMaxId(tiles) + 1;
@@ -242,9 +209,9 @@ export const getMaxId = (tiles: Tile[]): number => {
   return Math.max.apply(Math, [0, ...tiles.map((x) => x.id)]);
 };
 
-export const MOVES_MAP: {[key: string]: Function } = {
-  "up": moveUp,
-  "down": moveDown,
-  "right": moveRight,
-  "left": moveLeft,
+export const MOVES_MAP: { [key: string]: Function } = {
+  up: moveUp,
+  down: moveDown,
+  right: moveRight,
+  left: moveLeft,
 };

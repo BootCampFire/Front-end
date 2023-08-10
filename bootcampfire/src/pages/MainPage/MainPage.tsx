@@ -2,21 +2,7 @@ import styled from 'styled-components';
 import CustomizedInputBase from '../../components/CustomizedInputBase'; // CustomizedInputBase 컴포넌트 import
 import HotBoard from '../../components/MainPage/HotBoard';
 import Ranking from '../../components/MainPage/Ranking';
-import LoveBoard from '../../components/MainPage/LoveBoard';
-import FreeBoard from '../../components/MainPage/FreeBoard';
-import ItBoard from '../../components/MainPage/ItBoard';
-import BootCampBoard from '../../components/MainPage/BootCampBoard';
-import QuestionBoard from '../../components/MainPage/QuestionBoard';
-import WorryBoard from '../../components/MainPage/WorryBoard';
-import StudyBoard from '../../components/MainPage/StudyBoard';
-import HealthBoard from '../../components/MainPage/HealthBoard';
-import ProjectBoard from '../../components/MainPage/ProjectBoard';
-import axios from 'axios';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Cookie } from '@mui/icons-material';
-import { RootState } from 'store';
-import { useSelector } from 'react-redux';
+import SampleBoard from 'components/MainPage/SampleBoard';
 
 const MainContainer = styled.div`
   position: relative;
@@ -30,63 +16,33 @@ const BoardDiv = styled.div`
 `;
 
 export default function MainPage() {
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:8080/users')
-  //     .then((res) => console.log(res.data))
-  //     .catch((error) => console.error('Error fetching user data:', error));
-  // }, []);
+  function createData(index: number, img: string, text: string) {
+    return { index, img, text };
+  }
+  const rows = [
+    createData(1, '/asd', '자유게시판'),
+    createData(2, '/asd', '썸/연애'),
+    createData(3, '/asd', '헬스/다이어트'),
+    createData(4, '/asd', '고민'),
+    createData(5, '/asd', '프로젝트'),
+    createData(6, '/asd', '스터디'),
+    createData(7, '/asd', '질문'),
+    createData(8, '/asd', 'IT'),
+    createData(9, '/asd', '내 부트캠프'),
+  ];
   return (
     <MainContainer>
       <BoardDiv>
         <h1>MainPage</h1>
         <CustomizedInputBase />
         <HotBoard />
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <FreeBoard />
-              </td>
-              <td>
-                <LoveBoard />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <HealthBoard />
-              </td>
-              <td>
-                <WorryBoard />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <ProjectBoard />
-              </td>
-              <td>
-                <StudyBoard />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <QuestionBoard />
-              </td>
-              <td>
-                <ItBoard />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <BootCampBoard />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ display: 'flex' }}>
+          {rows.map((row) => (
+            <SampleBoard index={row.index} img={row.img} text={row.text} />
+          ))}
+          <Ranking />
+        </div>
       </BoardDiv>
-      <Ranking />
     </MainContainer>
   );
 }

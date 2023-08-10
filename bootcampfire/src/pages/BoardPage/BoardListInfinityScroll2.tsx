@@ -11,6 +11,7 @@ import axios from 'axios';
 import { Board } from 'components/Board/interface';
 import useIntersect from 'components/Board/BoardList/useIntersect';
 const API_URL = 'http://localhost:8080/categories';
+const accessToken = localStorage.getItem("accessToken");
 
 function BoardListInfinityScroll() {
     const navigate = useNavigate();
@@ -116,7 +117,12 @@ const StyledDiv = styled.div`
 `
 
 const getDataFromAPI = async (pageCount: number, url: string) => {
-    const response = await axios.get(`${url}?page=${pageCount}&size=5`);
+    const response = await axios.get(`${url}?page=${pageCount}&size=5`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+        }
+    });
     // const response = await axios.get(`${url}`);
     // console.log('response check', response);
     console.log("check", response.data.data)

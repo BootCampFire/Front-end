@@ -10,13 +10,14 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  userId: 3,
+
+  userId: -1,
   isLoggedIn: false,
+
   nickname: null,
   email: null,
   isAdmin: false,
-  bootcampId: 3,
-
+  bootcampId: -1,
 };
 
 const authSlice = createSlice({

@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Tag from 'components/BootCamp/Tag';
 
 import HotContent from './HotContent';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 const Container = styled.div``;
 
 const Table = styled.table`
@@ -32,7 +34,21 @@ const StyledChatBubbleOutlineRoundedIcon = styled(ChatBubbleOutlineRoundedIcon)`
   color: #94969b;
 `;
 
+interface hotData {
+  id: number;
+  category: string;
+  title: string;
+  likeCnt: number;
+  commentCnt: number;
+}
 export default function HotBoard() {
+  const [rows, setRows] = useState<hotData[]>([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/categories/hots`).then((res) => {
+      setRows(res.data.data);
+    });
+  }, []);
   return (
     <div>
       <Container>
@@ -40,19 +56,21 @@ export default function HotBoard() {
         <img src="/public/logo.png" alt="" height={'auto'} width={'auto'} />
         <Table>
           <tbody>
-            <Row>
-              <Cell>
-                <Tag text={'자유'} />
-              </Cell>
-              <Cell>
-                <HotContent link={'../../pages/MyPage/MyPage.tsx'} text={'핫글 제목'}></HotContent>
-              </Cell>
-              <Cell>
-                <IconWrapper>
-                  <StyledFavoriteBorderIcon /> 3 <StyledChatBubbleOutlineRoundedIcon /> 4
-                </IconWrapper>
-              </Cell>
-            </Row>
+            {rows.map((row) => (
+              <Row>
+                <Cell>
+                  <Tag text={row.category} />
+                </Cell>
+                <Cell>
+                  <HotContent link={`/BoardDetail/${row.id}`} text={row.title}></HotContent>
+                </Cell>
+                <Cell>
+                  <IconWrapper>
+                    <StyledFavoriteBorderIcon /> {row.likeCnt} <StyledChatBubbleOutlineRoundedIcon /> {row.commentCnt}
+                  </IconWrapper>
+                </Cell>
+              </Row>
+            ))}
           </tbody>
         </Table>
       </Container>
