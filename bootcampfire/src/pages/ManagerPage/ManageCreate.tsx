@@ -113,7 +113,6 @@ const ManageCreate = () => {
       return ;
     }
 
-    console.log("inputData", inputData);
     ["card", "support", "hasCodingtest"].forEach((element) => {
       requestReady[element] = requestReady[element] === 0 ? true : false;
     })
@@ -122,7 +121,6 @@ const ManageCreate = () => {
       onOff: onOffList[requestReady.onOff]
     }
 
-    console.log("request", request)
     axios.post(API_KEY, request, {
       headers: {
         Authorization: `Bearer ${accessToken}`

@@ -59,7 +59,6 @@ const ManageModify = () => {
       setTracks(tracksRes.data.data);
       setPlaces(regionsRes.data.data);
       setStacks(languagesRes.data.data);
-      console.log(initRes)
       setInputData(changePropertyStringToNumber(initRes.data.data));
     })
   },[])
@@ -395,10 +394,8 @@ const emptyCheck = (request: bootcampInput) => {
     if (value === "imgUrl" || key === "reviewCnt" || key === "algoCnt") { // 이미지는 default 이미지가 존재하므로 스킵
       continue;
     } else if (typeof value === "string" && value === "") {
-      console.log("어디?", key)
       return false;
     } else if (Array.isArray(value) && value.length === 0) {
-      console.log("어디?", key)
       return false;
     }
   }
