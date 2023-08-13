@@ -119,7 +119,7 @@ const ManageModify = () => {
 
     console.log("inputData", inputData);
     ["card", "support", "hasCodingtest"].forEach((element) => {
-      requestReady[element] = requestReady[element] === 0 ? true : false;
+      requestReady[element] = requestReady[element] === "0" ? true : false;
     })
 
     const request = {...requestReady,
@@ -405,10 +405,10 @@ const emptyCheck = (request: bootcampInput) => {
 
 const changePropertyStringToNumber = (input : bootcampInputResponse) => {
   const initData = {...input,
-    card: input.card? 1 : 2,
-    support: input.support? 1 : 2,
-    hasCodingtest: input.hasCodingtest? 1 : 2,
-    onOff: onOffMap.get(input.onOff) + 1,
+    card: input.card? 0 : 1,
+    support: input.support? 0 : 1,
+    hasCodingtest: input.hasCodingtest? 0 : 1,
+    onOff: onOffMap.get(input.onOff),
     startDate: input.startDate.replace(' ', 'T'),
     endDate: input.endDate.replace(' ', 'T'),
   }

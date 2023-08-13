@@ -60,7 +60,7 @@ const ManageRadioBtn = ({list, setBtn, selectData, type}: {
           sx={{flexDirection: "row"}}
         >
         {list.map((element, idx) => (
-          <FormControlLabel value={idx + 1} control={<Radio />} label={list[idx]}/>
+          <FormControlLabel value={idx} control={<Radio />} label={list[idx]}/>
         ))}
         </RadioGroup>
       </FormControl>
