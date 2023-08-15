@@ -27,13 +27,14 @@ const rows = [
 ];
 
 const Sample = styled.div`
-  position: absolute;
+  /* position: absolute;
   top: 120px;
-  right: 20px;
+  right: 20px; */
   display: 'flex';
   flex-direction: 'column';
   box-shadow: 'none';
   margin-left: 80;
+  flex-grow: 1;
 `;
 
 const Sample2 = styled.div`

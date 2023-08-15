@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Normal15px } from 'components/Board/styled';
 
 const HotContentContainer = styled(Link)`
-  margin: 0 50px; /* 여기에 간격을 조절할 수 있습니다 */
   color: #333;
+  width: 100%;
   text-decoration: none;
-
+  display: inline-block;
   &:hover {
     text-decoration: underline;
   }
 `;
+
+const StyledNormal15px = styled(Normal15px)`
+`
 
 interface ContentProps {
   text: string;
@@ -18,9 +22,11 @@ interface ContentProps {
 
 const HotContent: React.FC<ContentProps> = ({ text, link }) => {
   return (
-    <div>
-      <HotContentContainer to={link}>{text}</HotContentContainer>
-    </div>
+      <HotContentContainer to={link}>
+        <StyledNormal15px>
+          {text}
+        </StyledNormal15px>
+      </HotContentContainer>
   );
 };
 
