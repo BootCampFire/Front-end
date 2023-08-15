@@ -32,7 +32,7 @@ function SearchDropDown({visibility, searchType, dropDownHandler, visibilityHand
     return (
         <StyledDropdown>
             <div onClick={e => visibilityHandler(!visibility)}>
-                {!visibility && <ArrowDropDownIcon sx={{color: '#FF603D'}}/>} 
+                {!visibility && <ArrowDropDownIcon sx={{color: '#FF603D', fontSize: "40px", marginLeft: "10px"}}/>} 
                 {visibility && <ArrowDropUpIcon sx={{color: '#FF603D'}}/>} 
             </div>
             <DropDownCategory visibility={visibility} >

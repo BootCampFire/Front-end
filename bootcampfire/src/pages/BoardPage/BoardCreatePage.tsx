@@ -15,7 +15,6 @@ import { BoardDetail } from 'components/Board/interface';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
-const TEST_USERID = 1;
 
 interface LocationState {
   boardDetail: BoardDetail;
@@ -26,6 +25,7 @@ function BoardCreatePage() {
   const navigate = useNavigate();
   const state = useLocation().state as LocationState;
   let [initAnonymous, initCategory, initTitle, initContent] = [false, 0, '', ''];
+
 
   if (state) {
     initAnonymous = state.boardDetail.isLike;
@@ -55,7 +55,7 @@ function BoardCreatePage() {
     axios
       .post(`${process.env.REACT_APP_API_URL}/boards`, requestBody, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('Authorization')}`,
           'Content-Type': 'application/json',
         },
       })
