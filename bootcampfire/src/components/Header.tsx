@@ -6,15 +6,17 @@ import authSlice, { login, logout } from '../store/authSlice';
 import LoginModal from './Login/LoginModal';
 import React, { useEffect } from 'react';
 import { Bold21px } from './Board/styled';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 // import BoardCreateHeader from './Board/BoardCreate/BoardCreateHeader';
 import { colors } from 'constant/constant';
 import axios from 'axios';
-
+import { StrongBtn } from './Board/styled';
 const NavContainer = styled.div`
   background-color: #ffffff;
   border-bottom: 1.5px solid ${colors.BACKGROUND_DEEP};
   margin: 'auto';
   height: 80px;
+
 `;
 
 const HeaderContents = styled.div`
@@ -34,8 +36,8 @@ const LogoLink = styled(Link)`
 `;
 
 const NavLink = styled(Link)`
-  margin-right: 5%;
-  margin-left: 5%;
+  /* margin-right: 5%;
+  margin-left: 5%; */
   color: #333;
   text-decoration: none;
 
@@ -59,8 +61,8 @@ const ActionButton = styled.button`
 `;
 
 const WritePrimaryBtn = styled.button`
-  margin-left: 3%;
-  margin-right: 3%;
+  /* margin-left: 3%; */
+  /* margin-right: 3%; */
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -69,8 +71,17 @@ const WritePrimaryBtn = styled.button`
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
+  width: 74px;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
-
+const StyledStrongBtn = styled(StrongBtn)`
+  padding: 2px 10px;
+  @media (min-width: 900px) {
+    display: none;
+  }
+`
 const HeaderContentContainer = styled.div`
   display: flex;
   align-items: center;
@@ -80,6 +91,9 @@ export const LoginContentContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: auto;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 export default function Header() {
   const dispatch = useDispatch();
@@ -151,18 +165,23 @@ export default function Header() {
             <img src="/logo.png" alt="Home" style={{ width: 67, height: 74 }} />
           </LogoLink>
           <NavLink to="/Board">
-            <Bold21px as="span">Board</Bold21px>
+            <Bold21px as="span">게시판</Bold21px>
           </NavLink>
           <NavLink to="/BootCamp">
-            <Bold21px as="span">BootCamp</Bold21px>
-          </NavLink>
-          <NavLink to="/CampArticle">
-            <Bold21px as="span">CampArticle</Bold21px>
+            <Bold21px as="span">부캠정부</Bold21px>
           </NavLink>
           <NavLink to="/VS">
             <Bold21px as="span">VS</Bold21px>
           </NavLink>
+          <NavLink to="/CampArticle">
+            <Bold21px as="span">내 부트캠프</Bold21px>
+          </NavLink>
+          <div style={{display: 'flex', gap: '15px'}}>
+
           <WritePrimaryBtn onClick={handleWriteButtonClick}>글쓰기</WritePrimaryBtn>
+          <StyledStrongBtn type="first" onClick={handleWriteButtonClick}>
+            <CreateOutlinedIcon/>
+          </StyledStrongBtn>
           {isLoading && <ActionButton onClick={handleLogin} style={{visibility:"hidden"}}>로그인</ActionButton>}
           {!isLoading && isLoggedIn && (
             <LoginContentContainer>
@@ -188,6 +207,7 @@ export default function Header() {
           {!isLoading && !isLoggedIn &&
             <ActionButton onClick={handleLogin}>로그인</ActionButton>
           }
+          </div>
         </HeaderContentContainer>
         {/* 모달 컴포넌트 */}
         <LoginModal isModalOpen={isModalOpen} onClose={handleCloseModal} />
