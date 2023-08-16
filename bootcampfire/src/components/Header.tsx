@@ -107,7 +107,7 @@ export default function Header() {
               userId: res.data.data.id,
               nickname: res.data.data.nickname,
               email: res.data.data.email,
-              isAdmin: true,
+              isAdmin: res.data.data.isAdmin,
               bootcampId: res.data.data.bootcampId,
               bootcampName: res.data.data.bootcampName,
             })
