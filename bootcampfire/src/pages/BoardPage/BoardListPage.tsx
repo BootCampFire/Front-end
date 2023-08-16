@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import SearchBar from 'components/Board/BoardList/SearchBar';
 import CategorySideBar from 'components/Board/BoardList/CategorySideBar';
 import BoardCard from 'components/Board/BoardList/BoardCard';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import { StyledPage } from './styledPage';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
@@ -12,6 +12,8 @@ import { Board } from 'components/Board/interface';
 import useIntersect from 'components/Board/BoardList/useIntersect';
 import LoginModal from 'components/Login/LoginModal';
 import useGetHeader from 'constant/useGetHeader';
+import SkeletonBoardCard from 'components/Board/BoardList/SkeletonBoardCard';
+
 const API_URL = `${process.env.REACT_APP_API_URL}/categories`;
 const accesToken = localStorage.getItem('Authorization');
 
@@ -28,6 +30,7 @@ function BoardListPage() {
     const [url, setUrl] = useState("");
     const [pageCount, setPageCount] = useState(0);
     const [hasNext, setHasNext] = useState(true);
+    const [isLoading, setIsLoding] = useState(true);
 
     const handlerSelectCategory = (id: number) => {
         if (id === 9 && !user.isLoggedIn) setModalOpen(true);
@@ -58,6 +61,7 @@ function BoardListPage() {
         setUrl(completeURL);
         setHasNext(true);
         setPageCount(1);
+        // setIsLoding(false);
 
     }, [selectCategory, sort]);    
     
@@ -81,10 +85,11 @@ function BoardListPage() {
     }, {});
     
     const BoardList = boardListData.map((element, idx) => (
+        isLoading ? <SkeletonBoardCard /> :
         <BoardCard key={idx} data={element} 
             onClick={() => navigate(`/BoardDetail/${element.id}`, {state: selectCategory})}/>
     ))
-
+    
     return (
         <StyledPage>
             <SearchBar selectCategory={selectCategory}/> 
@@ -101,6 +106,15 @@ function BoardListPage() {
         </StyledPage>
     )
 }
+
+const loadingAnimation = keyframes`
+  0% {
+    background-position: -200%;
+  }
+  100% {
+    background-position: 200%;
+  }
+`;
 
 const TStyledDiv = styled.div`
     height: 730px;
