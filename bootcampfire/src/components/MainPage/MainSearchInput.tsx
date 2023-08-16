@@ -5,7 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDropDown from 'components/Board/BoardList/SearchDropDown';
 import { useNavigate } from 'react-router-dom';
-import { colors } from 'constant/constant';
+import { Bold21px } from 'components/Board/styled';
+import styled from 'styled-components';
 
 interface DropDownList {
   current: number;
@@ -17,7 +18,13 @@ let dummyData : DropDownList = {
   category : ["제목+내용", "작성자"],
 }
 
-export default function InputSection() {
+const StyledBold21px = styled(Bold21px)`
+  position: absolute;
+  right: calc(100% + 15px);
+  width: 80px;
+`
+
+export default function MainSearchInput({activeTitle} : {activeTitle: boolean}) {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [dropdownVisibility, setDropdownVisibility] = React.useState(false);
@@ -44,46 +51,33 @@ export default function InputSection() {
         p: '2px 4px',
         display: 'flex',
         alignItems: 'center',
-        width: '99%',
-        maxWidth: '745px',
+        width: "80%",
+        maxWidth: "600px",
         border: 3,
-        height: "60px",
         borderColor: '#FF603D',
         borderRadius: 10,
         boxShadow: 'none',
-        padding: "none",
-        margin: "25px auto 25px auto",
+        position: 'relative',
+        margin: 'auto',
       }}
-      className='asdfasdfasdfasdfasdfasdf'
-    // <form style={{
-    //   // p: '2px 4px',
-    //   display: 'flex',
-    //   alignItems: 'center',
-    //   width: '99%',
-    //   maxWidth: '500px',
-    //   border: 3,
-    //   borderColor: '#FF603D',
-    //   borderRadius: 10,
-    //   boxShadow: 'none',
-    // }}
       onSubmit={handleSearchSubmit}>
+      { activeTitle && <StyledBold21px>통합 검색</StyledBold21px> }
       <SearchDropDown 
         visibility= {dropdownVisibility}
         searchType= {dropdownSelect}
         dropDownHandler= {handleLiClick}
         visibilityHandler = {setDropdownVisibility}
-      />
+        />
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="검색하세요"
         inputProps={{ 'aria-label': 'search google maps' }}
         value={searchTerm}
         onChange={handleSearchChange}
-      />
+        />
       <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon sx={{color: colors.PRIMARY, fontSize: "40px", marginRight: "5px"}}/>
+        <SearchIcon />
       </IconButton>
-    {/* </form> */}
     </Paper>
   );
 }
