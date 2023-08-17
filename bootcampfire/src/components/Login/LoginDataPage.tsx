@@ -1,4 +1,3 @@
-import { Cookie, LocalParking } from '@mui/icons-material';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -27,21 +26,21 @@ export default function LoginDataPage() {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res.data);
         if (res.status === 200) {
           axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
           dispatch(
             login({
               userId: res.data.data.id,
               nickname: res.data.data.nickname,
               email: res.data.data.email,
-              isAdmin: res.data.data.isAdmin,
+              isAdmin: res.data.data.roll === 'USER' ? false : true,
               bootcampName: res.data.data.bootcampName,
               bootcampId: res.data.data.bootcampId,
             })
           );
 
-          navigate(-1);
+          navigate('/');
         }
       })
       .catch((res) => {

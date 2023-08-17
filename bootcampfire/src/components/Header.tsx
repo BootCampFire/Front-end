@@ -20,7 +20,6 @@ const NavContainer = styled.div`
   border-bottom: 1.5px solid ${colors.BACKGROUND_DEEP};
   margin: 'auto';
   height: 80px;
-
 `;
 
 const HeaderContents = styled.div`
@@ -94,19 +93,18 @@ const HeaderMidDiv = styled.div`
   .hide {
     visibility: hidden;
   }
-`
+`;
 
 const MiniStateBtn = styled(StrongBtn)`
   padding: 2px 10px;
   @media (min-width: 900px) {
     display: none;
   }
-`
+`;
 const HeaderContentContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
 `;
 
 const HeaderRightDiv = styled.div`
@@ -115,13 +113,13 @@ const HeaderRightDiv = styled.div`
   width: 280px;
   align-items: center;
   justify-content: center;
-`
+`;
 const HelloDiv = styled.div`
-width: 100%;
-text-overflow: ellipsis;
-white-space: nowrap;
-overflow: hidden;
-`
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
 
 export const LoginContentContainer = styled.div`
   display: flex;
@@ -147,90 +145,100 @@ export default function Header() {
   useEffect(() => {
     const accessToken = localStorage.getItem('Authorization');
     if (!isLoggedIn && accessToken) {
-      axios.get(`${process.env.REACT_APP_API_URL}/users`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          withCredentials: true,
-        }
-      }).then((res) => {
-        if (res.status === 200) {
-          axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-          dispatch(
-            login({
-              userId: res.data.data.id,
-              nickname: res.data.data.nickname,
-              email: res.data.data.email,
-              isAdmin: res.data.data.isAdmin,
-              bootcampId: res.data.data.bootcampId,
-              bootcampName: res.data.data.bootcampName,
-            })
-          );
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/users`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            withCredentials: true,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+            dispatch(
+              login({
+                userId: res.data.data.id,
+                nickname: res.data.data.nickname,
+                email: res.data.data.email,
+                isAdmin: res.data.data.isAdmin,
+                bootcampId: res.data.data.bootcampId,
+                bootcampName: res.data.data.bootcampName,
+              })
+            );
+            setIsLoading(false);
+          }
+        })
+        .catch((err) => {
           setIsLoading(false);
-      }}).catch((err) => {
-        setIsLoading(false);
-      })
+        });
     } else {
       setIsLoading(false);
     }
-  },[])
-  
-  
+  }, []);
+
   const handleLogin = () => {
     // 모달 열기 함수
     setModalOpen(true);
     // console.log(bootcampId);
   };
-  
+
   const handleWriteButtonClick = () => {
     isLoggedIn ? navigate('/BoardCreate') : setModalOpen(true);
   };
-  
+
   const handleLogout = () => {
     dispatch(logout());
     const isMyPage = new RegExp('My');
     const isManagerPage = new RegExp('Manage');
     const thisLocation = window.location.href;
-    localStorage.removeItem("Authorization");
-    localStorage.removeItem("refreshToken");
+    localStorage.removeItem('Authorization');
+    localStorage.removeItem('refreshToken');
     if (isMyPage.test(thisLocation) || isManagerPage.test(thisLocation)) navigate('/');
   };
-  
+
   const handleCloseModal = () => {
     // 모달 닫기 함수
     setModalOpen(false);
   };
-  
+
   return (
     <NavContainer>
-    <HeaderContents className="test">
-      <HeaderContentContainer>
-        <LogoLink to="/">
-          <img src="/logo.png" alt="Home" style={{ width: 67, height: 74 }} />
-        </LogoLink>
-        <HeaderMidDiv>
-
-        <NavLink to="/Board">
-          <Bold21px as="span">게시판</Bold21px>
-        </NavLink>
-        <NavLink to="/BootCamp">
-          <Bold21px as="span">부캠정보</Bold21px>
-        </NavLink>
-        <NavLink to="/VS">
-          <Bold21px as="span">VS</Bold21px>
-        </NavLink>
-        <NavLink to="/CampArticle" className={!isLoggedIn ? "hide" : ""}>
-          <Bold21px as="span">My 캠프</Bold21px>
-        </NavLink>
-        </HeaderMidDiv>
-        <HeaderRightDiv>
-          <WritePrimaryBtn onClick={handleWriteButtonClick}>글쓰기</WritePrimaryBtn>
-          <MiniStateBtn type="first" onClick={handleWriteButtonClick}>
-            <CreateOutlinedIcon/>
-          </MiniStateBtn>
-          {isLoading && <ActionButton onClick={handleLogin} style={{visibility:"hidden"}}>로그인</ActionButton>}
-          {isLoading &&  <MiniStateBtn type="" onClick={handleLogin} ><LoginIcon/></MiniStateBtn>}
-          {!isLoading && isLoggedIn && (
-            <LoginContentContainer>
+      <HeaderContents className="test">
+        <HeaderContentContainer>
+          <LogoLink to="/">
+            <img src="/logo.png" alt="Home" style={{ width: 67, height: 74 }} />
+          </LogoLink>
+          <HeaderMidDiv>
+            <NavLink to="/Board">
+              <Bold21px as="span">게시판</Bold21px>
+            </NavLink>
+            <NavLink to="/BootCamp">
+              <Bold21px as="span">부캠정보</Bold21px>
+            </NavLink>
+            <NavLink to="/VsPage">
+              <Bold21px as="span">VS</Bold21px>
+            </NavLink>
+            <NavLink to="/CampArticle" className={!isLoggedIn ? 'hide' : ''}>
+              <Bold21px as="span">My 캠프</Bold21px>
+            </NavLink>
+          </HeaderMidDiv>
+          <HeaderRightDiv>
+            <WritePrimaryBtn onClick={handleWriteButtonClick}>글쓰기</WritePrimaryBtn>
+            <MiniStateBtn type="first" onClick={handleWriteButtonClick}>
+              <CreateOutlinedIcon />
+            </MiniStateBtn>
+            {isLoading && (
+              <ActionButton onClick={handleLogin} style={{ visibility: 'hidden' }}>
+                로그인
+              </ActionButton>
+            )}
+            {isLoading && (
+              <MiniStateBtn type="" onClick={handleLogin}>
+                <LoginIcon />
+              </MiniStateBtn>
+            )}
+            {!isLoading && isLoggedIn && (
+              <LoginContentContainer>
                 <HelloDiv>안녕하세요 {nickname}님</HelloDiv>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   {isAdmin ? (
@@ -246,28 +254,38 @@ export default function Header() {
                     로그아웃
                   </div>
                 </div>
-            </LoginContentContainer>
-          )}
-          {!isLoading && isLoggedIn && !isAdmin && 
+              </LoginContentContainer>
+            )}
+            {!isLoading && isLoggedIn && !isAdmin && (
               <Link to={'/MyPage'} style={{ color: '#94969B', textDecorationLine: 'none' }}>
-                <MiniStateBtn type=""><PersonIcon/></MiniStateBtn>
-            </Link>}
-          {!isLoading && isLoggedIn && isAdmin && 
-             <Link to={'/ManagerPage'} style={{ color: '#94969B', textDecorationLine: 'none' }}>
-               <MiniStateBtn type=""><ManageAccountsIcon/></MiniStateBtn>
-           </Link>}
-          {!isLoading && isLoggedIn && <MiniStateBtn type="" onClick={handleLogout}><LogoutIcon/></MiniStateBtn>}
-          {!isLoading && !isLoggedIn && 
-            <ActionButton onClick={handleLogin}>로그인</ActionButton>
-          }
-          {!isLoading && !isLoggedIn && 
-            <MiniStateBtn type="" onClick={handleLogin}><LoginIcon/></MiniStateBtn>
-          }
-        </HeaderRightDiv>
-      </HeaderContentContainer>
-      {/* 모달 컴포넌트 */}
-      <LoginModal isModalOpen={isModalOpen} onClose={handleCloseModal} />
-    </HeaderContents>
-  </NavContainer>
+                <MiniStateBtn type="">
+                  <PersonIcon />
+                </MiniStateBtn>
+              </Link>
+            )}
+            {!isLoading && isLoggedIn && isAdmin && (
+              <Link to={'/ManagerPage'} style={{ color: '#94969B', textDecorationLine: 'none' }}>
+                <MiniStateBtn type="">
+                  <ManageAccountsIcon />
+                </MiniStateBtn>
+              </Link>
+            )}
+            {!isLoading && isLoggedIn && (
+              <MiniStateBtn type="" onClick={handleLogout}>
+                <LogoutIcon />
+              </MiniStateBtn>
+            )}
+            {!isLoading && !isLoggedIn && <ActionButton onClick={handleLogin}>로그인</ActionButton>}
+            {!isLoading && !isLoggedIn && (
+              <MiniStateBtn type="" onClick={handleLogin}>
+                <LoginIcon />
+              </MiniStateBtn>
+            )}
+          </HeaderRightDiv>
+        </HeaderContentContainer>
+        {/* 모달 컴포넌트 */}
+        <LoginModal isModalOpen={isModalOpen} onClose={handleCloseModal} />
+      </HeaderContents>
+    </NavContainer>
   );
 }
